@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "blinberi-review-admin"
+version = "0.1.0"
+description = "admin for statistic reviews for blinberri restorans"
+authors = ["0x6D-developerBYmik34 <63368593+0x6D-developerBYmik34@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "blinberi_review_admin"}]
+# package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^5.0.4"
+django-ninja = "^1.1.0"
+django-cors-headers = "^4.3.1"
+psycopg = "^3.1.18"
+psycopg-binary = "^3.1.18"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
