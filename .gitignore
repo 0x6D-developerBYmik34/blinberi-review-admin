@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 .routify
+.venv
+bra_backend/bra_backend/.pg_service.conf
+bra_backend/bra_backend/.my_pgpass
+
 
 # Editor directories and files
 .vscode/*

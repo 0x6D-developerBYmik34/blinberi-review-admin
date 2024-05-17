@@ -86,12 +86,14 @@
 </script>
 
 <article>
-    <h3>Рейтинг городов</h3>
-    <Select variant="outlined" bind:value label="Дата">
-        {#each dataOprions as opt}
-        <Option value={opt}>{opt}</Option>
-        {/each}
-    </Select>
+    <div class="review-list-head">
+        <h3>Рейтинг городов</h3>
+        <Select variant="outlined" bind:value label="Дата">
+            {#each dataOprions as opt}
+            <Option value={opt}>{opt}</Option>
+            {/each}
+        </Select>
+    </div>
     <div class="review-list-cont">
         {#each testData as obj }
         <ReviewStrip fillForStrip={obj} />
@@ -100,6 +102,16 @@
 </article>
 
 <style>
+    .review-list-head {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .review-list-head > * {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
     article {
         margin: 10px;
     }

@@ -12,7 +12,7 @@
     <QualityIndex />
     <TopFive />
     <!-- <MonthRatingChart /> -->
-    <ReviewRatingList />
+    <!-- <ReviewRatingList /> -->
 </main>
 
 <style>
