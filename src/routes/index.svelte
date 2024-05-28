@@ -1,11 +1,11 @@
 <script lang="ts">
     import { params } from "@roxi/routify";
-    import MainPage from "../pages/MainPage.svelte";
-    import CityPage from "../pages/CityPage.svelte";
+    import MainPage from "../pages/MainPage/MainPage.svelte";
+    import CityPage from "../pages/CityPage/CityPage.svelte";
 </script>
 
-{#if $params.city === undefined}
-<MainPage />
-{:else}
+{#if $params.city !== undefined}
 <CityPage />
+{:else}
+<MainPage />
 {/if}

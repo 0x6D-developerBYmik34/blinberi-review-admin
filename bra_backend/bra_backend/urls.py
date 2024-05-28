@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
+from django.views.generic import TemplateView
+from .settings import BASE_DIR
 
 from reviewapi.api import reviewapi_router
 
@@ -26,6 +28,9 @@ api = NinjaAPI()
 api.add_router('', reviewapi_router)
 
 urlpatterns = [
+    path('', TemplateView.as_view(
+        template_name="index.html"
+    )),
     path('admin/', admin.site.urls),
     path('api/', api.urls)
 ]

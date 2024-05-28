@@ -7,21 +7,20 @@
 <script lang="ts">
     import Card, { Content } from '@smui/card'
 
+    // consts
+    const defaultIndex = 4.3;
     // props
+    export let value = defaultIndex
     export let isOneLocation = false;
     // export const pageType
 
-    // consts
-    const defaultIndex = 4.3;
-
-    let index = defaultIndex;
 </script>
 
 
 <article class="card-container">
     <Card>
         <Content>
-            <p class="is_index content_child">{index}</p>
+            <p class="is_index content_child">{value}</p>
             <h2 class="content_child ch">Индекс качества</h2>
             <p class="pometka content_child">
                 *Средний рейтинг локаци{isOneLocation ? "и" : "й"} за текущий месяй, 
@@ -35,8 +34,9 @@
 
 <style>
     .is_index {
-        /* font-size: 120px; */
+        /* font-size: 110px; */
         font-size: 7vw;
+        /* font-size: 7em; */
         font-weight: bold;
         text-align: center;
     }

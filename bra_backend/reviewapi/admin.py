@@ -1,6 +1,16 @@
 from django.contrib import admin
+from django import forms
+from django.contrib.admin.helpers import ActionForm
+
+# from .megaactions import *
 
 from .models import *
+from .logic import *
+
+
+#class XForm(ActionForm):
+#    last_date = forms.DateField(null=True)
+#    len_reviews = forms.IntegerField(null=True)
 
 
 @admin.action(description="Включить обьеткы в учёт рейтинга")
@@ -14,7 +24,6 @@ def active_on_rank_false(modeladmin, request, queryset):
 
 
 # Register your models here.
-
 @admin.register(Brand)
 class BrandViewAdmin(admin.ModelAdmin):
     exclude = ["active_on_rank"]
@@ -30,21 +39,35 @@ class CityViewAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationViewAdmin(admin.ModelAdmin):
+    # action_form = XForm
     exclude = ["active_on_rank"]
     list_display = [
         "active_on_rank", 
+        "disp_rank",
         "addres", 
         "point",
         "brand_with_active",
         "city",
         ]
     list_display_links = ["active_on_rank", "addres", "point"] 
-    actions = [active_on_rank_true, active_on_rank_false]
+    actions = [
+        active_on_rank_true, 
+        active_on_rank_false,
+        # add_simple_review_for_locations,
+        # add_detail_review_for_location,
+    ]
 
     @admin.display(description="Бренд")
     def brand_with_active(self, obj):
         mark = "✅" if obj.brand.active_on_rank else "❌"
         return f"{obj.brand.title} ({mark})"
+
+
+    @admin.display(description="Рейтинг")
+    def disp_rank(self, obj):
+        return count_rating_and_amount_for_location(
+            Q(location=obj)
+        )[0]
 
 
 @admin.register(Review)

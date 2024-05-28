@@ -3,11 +3,7 @@
 <script lang="ts">
     import Card, { Content } from '@smui/card'
 
-    // props
-    // export const pageType
-    // or
-    // expoer const isBrandTop // если делигируем
-    // export const filterConfig
+    export let topList: string[]
 
     // consts
     const defaultTopLoc = [
@@ -22,10 +18,10 @@
 <article class="card-container">
     <Card>
         <Content>
-            <p class="top_head">Топ 5 локаций</p>
+            <p class="top_head">Топ 5 <slot/></p>
             <ul class="top_i_container">
-                {#each defaultTopLoc as loc_text }
-                <li class="top_item">{loc_text}</li>
+                {#each topList as top_text }
+                <li class="top_item">{top_text}</li>
                 {/each}
             </ul>
         </Content>

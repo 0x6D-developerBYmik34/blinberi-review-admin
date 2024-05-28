@@ -3,21 +3,19 @@
     import Card, { Content } from '@smui/card'
 
     // props
-    export let fillForStrip = {
+    export let fillForStrip: ReviewStripIf = {
         index: 5.0,
         localHead: "Локация",
         localDescription: "Уточнение локации (если есть)",
         amountDescriptuion: "Кол-во чего-то (отзыв/локация)"
     } 
 
-    // consts
-
 </script>
 
 <article class="card-container">
     <Card variant="outlined">
         <Content class="strip-layout">
-            <p class="review-index">{fillForStrip.index.toFixed(1)}</p>
+            <p class="review-index">{fillForStrip.index}</p>
             <div class="strip-description">
                 <p class="desc-head">{fillForStrip.localHead}</p>
                 {#if fillForStrip.localDescription }
@@ -33,7 +31,9 @@
     .strip-description > * {
         margin: 0;
     }
-
+    .strip-description {
+        min-width: 10%;
+    }
     .desc-head {
         font-size: large;
         font-weight: bold;
@@ -42,7 +42,8 @@
     .review-index {
         text-align: center;
         font-weight: bold;
-        font-size: 2vw;
+        /* font-size: 2vw; */
+        font-size: 18px;
         white-space: nowrap;
     }
 
@@ -68,16 +69,20 @@
     }
 
     .card-container {
-        /* display: inline-flex; */
-        /* flex-direction: column; */
-        /* align-items: center; */
         display: block;
         margin: 10px;
-        /* min-height: 200px; */
-        /* width: 250px; */
-        /* max-width: 100%; */
-
-        /* padding: 20px; */
     }
+    @media (max-width: 780px) {
+        :global(.strip-layout) {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
+        .review-count {
+            color: gray;
+            margin-top: 10px;
+        }
+    }
 </style>

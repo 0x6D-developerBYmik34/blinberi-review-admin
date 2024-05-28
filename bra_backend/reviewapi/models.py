@@ -1,9 +1,6 @@
 from django.db import models
-# from django.contrib.gis.db.models import PointField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
-# если не знаешь длинну поля - смело лепи текст
-# так сойдёт
 
 class Brand(models.Model):
     # title может быть unique and primary key
@@ -49,8 +46,10 @@ class Location(models.Model): # другой pk
 
 
 class Review(models.Model):
-    resorce = models.CharField() # seald or enum
-    rating = models.PositiveIntegerField() # от 0 до 5 (check <= 5)
+    resorce = models.CharField() 
+    rating = models.PositiveIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    ) 
     review = models.TextField()
     date =  models.DateField()
     location = models.ForeignKey(

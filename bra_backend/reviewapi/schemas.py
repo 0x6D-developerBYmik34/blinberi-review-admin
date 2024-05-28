@@ -1,36 +1,7 @@
-from typing import Optional
-from django.db.models import Q
-from ninja import FilterSchema, ModelSchema, Schema
+from ninja import ModelSchema, Schema
 from decimal import Decimal
-from pydantic import PositiveInt
 
-from .models import Review
-
-
-class BrandFilterMixin:
-    def filter_brand(self, value: str) -> Q:
-        '''фильтрация Brand.active_on_rank'''
-        return Q(
-            brand=value, 
-            brand__active_on_rank=True,
-        )
-
-
-def location_noactive_sifter(cls: type[FilterSchema]):
-    func = cls.get_filter_expression
-    def get_filter_expression(self: FilterSchema) -> Q:
-        q = func(self)
-        q &= Q(active_on_rank=True)
-        q &= Q(brand__active_on_rank=True)
-        return q
-            
-    cls.get_filter_expression = get_filter_expression
-    return cls
-
-
-@location_noactive_sifter
-class LocationForCityListFilter(FilterSchema, BrandFilterMixin):
-    brand: Optional[str] = None 
+from .models import Brand, City, Review, Location
 
 
 class CityOut(Schema):
@@ -39,26 +10,41 @@ class CityOut(Schema):
     amount_locations: int
 
 
-@location_noactive_sifter
-class LocationRatingListFilter(FilterSchema, BrandFilterMixin):
-    city : Optional[int] = None
-    brand: Optional[str] = None 
-    # город по строке
+#class LocationRatingMember(Schema):
+#    id: int
+#    rating: Decimal
+#    amount_reviews: int
+#    name: str
+#    addrs: str
+#    brand: str
+class CityScheme(ModelSchema):
+    class Meta:
+        model = City
+        exclude = ['tel_city_code']
 
 
-class LocationRatingMember(Schema):
+class BrandScheme(ModelSchema):
+    class Meta:
+        model = Brand
+        exclude = ['desctiption', 'active_on_rank']
+
+
+class LocationOut(ModelSchema):
     rating: Decimal
     amount_reviews: int
-    name: str
-    addrs: str
-    
-
-@location_noactive_sifter
-class ReviewListIn(FilterSchema):
-    id: PositiveInt
+    brand: BrandScheme
+    city: CityScheme
+    class Meta:
+        model = Location
+        exclude = ['active_on_rank', 'title', 'brand', 'city']
     
 
 class ReviewOut(ModelSchema):
     class Meta:
         model = Review
         exclude = ['id', 'location']
+
+
+class BrandWithRankOut(Schema):
+    title: str
+    rating: Decimal
