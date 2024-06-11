@@ -11,6 +11,9 @@ from .logic import *
 #class XForm(ActionForm):
 #    last_date = forms.DateField(null=True)
 #    len_reviews = forms.IntegerField(null=True)
+admin.site.site_title = "Review admin"
+admin.site.site_header = "Сервиса сбора и составления рейтингов локаций: админ-панель"
+admin.site.index_title = "Добавление/Изменение/Просмотр сущностей"
 
 
 @admin.action(description="Включить обьеткы в учёт рейтинга")
@@ -79,6 +82,8 @@ class ReviewViewAdmin(admin.ModelAdmin):
         "resorce",
         ]
     list_display_links = ["date"] 
+
+    list_filter = ["location"]
 
     @admin.display(description="геометка")
     def loc_point(self, obj):

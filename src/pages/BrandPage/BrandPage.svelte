@@ -50,7 +50,7 @@
     {#await viewmanager.loadData()}
     <h1>Загрузка...</h1>
     {:then res_ok} 
-    <h1>{viewmanager.brand},  рейтинг каечтва</h1>
+    <h1>{viewmanager.brand}, рейтинг качества</h1>
     <article class="info-container">
         <div class="qi"><QualityIndexWithLoad filterProp={filterProp} /></div>
         <div class="tf"><TopFiveLocations filterProp={filterProp}/></div>

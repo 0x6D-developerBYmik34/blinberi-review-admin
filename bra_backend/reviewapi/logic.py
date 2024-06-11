@@ -12,11 +12,14 @@ from .schemas import (
     )
 
 
-@lru_cache(maxsize=200)
+# @lru_cache(maxsize=200)
 def count_rating_and_amount_for_location(
     review_filter_by_loc: Q
     ) -> tuple[Decimal, int]:
-    '''review_filter_by_loc = Q(loc=loc)'''
+    '''
+    Подсчёт рейтинга и количества отзывов для одной локации,
+    отзывы отфильтрованны аргументом review_filter_by_loc
+    '''
     loc_rating = 0
     amount = 0
     for r in Review.objects.filter(review_filter_by_loc):
@@ -30,11 +33,16 @@ def count_rating_and_amount_for_location(
     return loc_rating, amount
 
 
-@lru_cache(maxsize=200)
+# @lru_cache(maxsize=200)
 def count_rank_and_amount_for_locations(
     filter_for_locs: Q, 
     filter_for_reviews: Q = Q()
     ) -> tuple[Decimal, int]:
+    '''
+    Подсчёт рейтинга и количества локаций для группы локаций,
+    отфильтрованных аргументом filter_for_locs.
+    Отзывы отфильтрованны аргументом review_filter_by_loc.
+    '''
     count = 0
     out_rank = 0
     for loc in Location.objects.filter(filter_for_locs):
@@ -74,7 +82,7 @@ def get_rank_for_given_month_for_locations(
     )[0]
 
 
-@lru_cache(maxsize=50)
+# @lru_cache(maxsize=50)
 def get_ready_location_rating_list(
     locations_filter: Q
     ) -> list[LocationOut]:

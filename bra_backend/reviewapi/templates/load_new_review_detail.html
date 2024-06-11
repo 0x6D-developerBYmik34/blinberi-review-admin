@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    {{ form }}
+    <p>Укажите дату отсчёта и количество отзывов</p>
+    <input type="hidden" name="action" value="add_detail_review_for_location" />
+    <input type="submit" name="apply" value="Сохранить" />
+</form>
+{% endblock %}

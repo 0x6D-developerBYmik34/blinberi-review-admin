@@ -23,7 +23,11 @@ from .settings import BASE_DIR
 from reviewapi.api import reviewapi_router
 
 
-api = NinjaAPI()
+api = NinjaAPI(
+    title="Review admin API",
+    description="API севрвиса сбора и составления рейтингов локаций",
+    version="0.9.9",
+)
 
 api.add_router('', reviewapi_router)
 

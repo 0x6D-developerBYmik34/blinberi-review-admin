@@ -15,6 +15,7 @@ reviewapi_router = Router()
     response=str
 )
 def get_city_name(request, tel_city_code: int):
+    '''tel_city_code - телефонный код города'''
     return City.objects.filter(tel_city_code=tel_city_code).get().name
 
 
@@ -27,6 +28,11 @@ def last_quality_index_view(
     brand_filter: Query[BrandFilter],
     city_filter: Query[CityFilter]
     ): 
+    '''
+    Посчитает и вернёт средний рейтинг локаций за текущий месяй,
+    с фильтрацией по бренду или городу (если указанны).
+    Город в формате телефонного кода.
+    '''
     return get_last_mounth_rank_for_locations(
         brand_filter.get_filter_expression() 
         & city_filter.get_filter_expression()
@@ -44,6 +50,11 @@ def month_quality_index_view(
     city_filter: Query[CityFilter],
     location_filter: Query[LocationByOptionalIdFilter],
     ): 
+    '''
+    Посчитает и вернёт средний рейтинг локаций(и) до указанной датe
+    с фильтрацией по бренду или городу (если указанны).
+    Город в формате телефонного кода.
+    '''
     return count_rank_and_amount_for_locations(
         brand_filter.get_filter_expression() 
         & city_filter.get_filter_expression()
@@ -61,9 +72,15 @@ def top_five_locations_view(
     brand_filter: Query[BrandFilter],
     city_filter: Query[CityFilter]
     ): 
+    '''
+    Посчитает и вернёт список топ пяти локаций 
+    с фильтрации по бренду или городу (если указанны).
+    Город в формате телефонного кода.
+    '''
+    q = brand_filter.get_filter_expression() & city_filter.get_filter_expression()
+    print(q)
     return get_top_locations_by_rating(
-        brand_filter.get_filter_expression() 
-        & city_filter.get_filter_expression(),
+        q,
     )
 
 
@@ -75,6 +92,11 @@ def top_five_brands_view(
     request, 
     city_filter: Query[CityFilter]
     ):
+    '''
+    Посчитает и вернёт список топ пяти брендов 
+    с фильтрацией по городу (если указанн).
+    Город в формате телефонного кода.
+    '''
     return get_top_brands_by_rank(
         city_filter.get_filter_expression()
     )
@@ -88,7 +110,9 @@ def city_list_view(
     request, 
     brand_filter: Query[BrandFilter],
     ):
-    '''Return city list with ratings'''
+    '''
+    Вернёт список городов, отсортированных по бренду (если указанн)
+    '''
     return get_city_with_rank_list(
         brand_filter.get_filter_expression() 
     )
@@ -101,6 +125,9 @@ def city_list_view(
 def reviews_list_view(
     request, 
     filters: Query[LocationByIdFilter]):
+    '''
+    Вернёт список отзывов для указанной id локации
+    '''
     return get_review_list_for_location(
         filters.get_filter_expression()
     )
@@ -111,6 +138,7 @@ def reviews_list_view(
     response=LocationOut
 )
 def location_view(request, filters: Query[LocationByIdFilter]):
+    '''Вернёт ифнормацию о локации по её id'''
     loc = filters.filter(Location.objects.all()).get()
     loc_rating, amount = count_rating_and_amount_for_location(
         Q(location=loc)
@@ -135,6 +163,10 @@ def location_rating_list_view(
     brand_filter: Query[BrandFilter],
     city_filter: Query[CityFilter]
     ):
+    '''
+    Вернёт список локации с фильтрацией по бренду или городу
+    (если указанны). Город в формате телефонного кода.
+    '''
     return get_ready_location_rating_list(
         brand_filter.get_filter_expression() 
         & city_filter.get_filter_expression(),

@@ -1,9 +1,3 @@
-
-<!-- это карточка, есть огромный индекс, под ним две подписи -->
-<!-- заголовочная и звёздочная -->
-
-<!-- Как будет считаться индекс? какой интерфейс? -->
-
 <script lang="ts">
     import Card, { Content } from '@smui/card'
 
@@ -34,9 +28,7 @@
 
 <style>
     .is_index {
-        /* font-size: 110px; */
         font-size: 7vw;
-        /* font-size: 7em; */
         font-weight: bold;
         text-align: center;
     }

@@ -6,6 +6,9 @@ from pydantic import PositiveInt, PastDate
 
 
 class BrandFilterMixin:
+    '''
+    Миксин для фильтрации неактивных для рейтинга брендов
+    '''
     def filter_brand(self, value: str) -> Q:
         '''фильтрация Brand.active_on_rank'''
         return Q(
@@ -14,7 +17,13 @@ class BrandFilterMixin:
         )
 
 
-def location_noactive_sifter(cls: type[FilterSchema]):
+def location_noactive_sifter(
+    cls: type[FilterSchema]
+    ) -> type[FilterSchema]:
+    '''
+    Декоратор класса для фильтрации неактивных
+    в рейтинге локаций и брендов
+    '''
     func = cls.get_filter_expression
     def get_filter_expression(self: FilterSchema) -> Q:
         q = func(self)
@@ -44,6 +53,7 @@ class CityFilter(FilterSchema):
 
  
 class DateFilter(FilterSchema):
+    '''Фильтрация рейтинга по указанной последней дате'''
     given_date: Optional[PastDate] = None
 
     def filter_given_date(self, value) -> Q:

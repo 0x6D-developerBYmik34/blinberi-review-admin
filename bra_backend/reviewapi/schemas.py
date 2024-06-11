@@ -5,6 +5,9 @@ from .models import Brand, City, Review, Location
 
 
 class CityOut(Schema):
+    '''
+    Выходная схема города с вычисленным для него рейтингом
+    '''
     rating: Decimal
     name: str
     amount_locations: int
@@ -39,6 +42,8 @@ class LocationOut(ModelSchema):
         exclude = ['active_on_rank', 'title', 'brand', 'city']
     
 
+# ModelSchema как Schema, но создаётся на основе 
+# Django модели
 class ReviewOut(ModelSchema):
     class Meta:
         model = Review
